@@ -1,5 +1,7 @@
 import { useState } from "react";
-import axios from "axios";
+// ❌ ELIMINAMOS EL AXIOS DIRECTO
+// import axios from "axios"; 
+import api from "@/lib/api"; // ✅ IMPORTAMOS LA INSTANCIA CONFIGURADA
 import { useAuthStore } from "@/store/authStore";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -28,13 +30,15 @@ export default function LoginPage() {
       formData.append("username", username);
       formData.append("password", password);
 
-      const response = await axios.post("http://127.0.0.1:8000/login", formData);
+      // 🚨 CORRECCIÓN CLAVE: Usamos la instancia 'api' con solo el path del endpoint
+      const response = await api.post("/login", formData);
 
       setToken(response.data.access_token, username);
       navigate("/");
       
     } catch (err) {
       console.error(err);
+      // Podemos revisar si el error es 401 para dar un mensaje más específico si es necesario
       setError("Usuario o contraseña incorrectos");
     } finally {
       setLoading(false);

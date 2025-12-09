@@ -15,6 +15,10 @@ interface CartState {
   removeItem: (id: number) => void;
   increaseQuantity: (id: number) => void;
   decreaseQuantity: (id: number) => void;
+  
+  // ✅ NUEVO: Función para actualizar la cantidad manualmente (para el input del modal)
+  updateQuantity: (id: number, quantity: number) => void;
+  
   clearCart: () => void;
   // Getters computados
   getTotal: () => number;
@@ -67,9 +71,20 @@ export const useCartStore = create<CartState>()(
             ),
           });
         } else {
-          // Si llega a 0, ¿lo borramos? Generalmente mejor dejarlo en 1 o borrarlo explícitamente.
-          // Aquí lo dejaremos en 1, el usuario debe usar el botón de basura para borrar.
+          // Si llega a 0, lo dejamos en 1. El usuario debe usar el botón de basura para borrar.
         }
+      },
+
+      // ✅ IMPLEMENTACIÓN NUEVA
+      updateQuantity: (id, quantity) => {
+        const currentItems = get().items;
+        // Evitamos cantidades negativas o cero con Math.max(1, quantity)
+        // Si quieres permitir 0 para borrar, cambia esto, pero es más seguro manejar el borrado con removeItem.
+        set({
+          items: currentItems.map((item) =>
+            item.id === id ? { ...item, quantity: Math.max(1, quantity) } : item
+          ),
+        });
       },
 
       clearCart: () => set({ items: [] }),

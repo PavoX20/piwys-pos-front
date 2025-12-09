@@ -21,7 +21,7 @@ export default function DashboardLayout() {
            alt="Logo Piwys" 
            className="h-10 w-10 rounded-full object-cover border border-zinc-100 shadow-sm"
          />
-         <span className="font-bold text-xl tracking-tight text-zinc-800">Piwy's POS</span>
+         <span className="font-bold text-xl tracking-tight text-zinc-800">Piwy's Heladería</span>
       </div>
       
       <nav className="flex-1 p-4 space-y-2">
@@ -83,7 +83,7 @@ export default function DashboardLayout() {
               <SidebarContent />
             </SheetContent>
           </Sheet>
-          <span className="ml-4 font-bold text-lg">Piwy's POS</span>
+          <span className="ml-4 font-bold text-lg">Piwy's Heladería</span>
         </header>
 
         {/* ÁREA DE PÁGINAS */}
